@@ -10,3 +10,22 @@
     'GRAD' 0,
     'opsz' 24;
 }
+
+.material-symbols-outlined.fill {
+  font-variation-settings:
+    'FILL' 1,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24;
+}
+
+@font-face {
+  font-family: emoji;
+  src: url('/fonts/Noto_Color_Emoji/NotoColorEmoji-Regular.ttf');
+}
+
+.f-emoji {
+  font-family: emoji, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}

@@ -19,12 +19,15 @@ export default {
       store,
     }
   },
-  mounted() {
-    this.store.start();
-    this.store.loading.on("Caricamento di un secondo");
-    setTimeout(() => {
-      this.store.loading.off();
-    }, 1000);
+  watch: {
+    '$route.name'(newRoute, oldRoute) {
+      if (newRoute !== oldRoute) {
+        this.store.routeName = newRoute
+      }
+    },
+  },
+  async mounted() {
+    await this.store.start();
   }
 }
 
