@@ -1,14 +1,14 @@
 import { reactive } from 'vue'
+import { loading } from './loading';
 import axios from 'axios'
 
 export const store = reactive({
+    appName: 'Vue-Bootstrap-Netlify', // Cambiare anche in index.html e site.webmanifest
     routeName: '',
-    textHello: 'Ciao Mondo',
 
     async start() {
-
         // Ho riatardato la chiamata cosi si può vedere il loader.
-        this.loading.on()
+        loading.on('Il sito è timido, sta venendo fuori piano piano.')
         setTimeout(async () => {
 
             await axios.get('/api')
@@ -27,32 +27,8 @@ export const store = reactive({
                     location.reload();
                 });
 
-            this.loading.off()
+            loading.off()
         }, 2000);
 
-    },
-
-    loading: {
-        state: false,
-        msg: "Il sito è timido, sta venendo fuori piano piano.",
-
-        defaultMsg: [
-            "Carichiamo i dati… o forse stiamo solo prendendo un caffè!",
-            "Metà del tempo di caricamento è stato dedicato a guardare gattini su Internet.",
-            "Sei sicuro di volere davvero vedere cosa c'è dopo?",
-            "Sintonizzando i bytes… quasi pronti!",
-            "Ancora un attimo, i robot stanno finendo il caffè.",
-            "I dati si stanno allacciando le scarpe…",
-            "Stiamo cercando il bottone 'carica più veloce'!",
-            "Nel frattempo, danza della pioggia per far caricare più in fretta!",
-            "Tenetevi forte… stiamo caricando meraviglie!",
-            "Hai aspettato così tanto che potresti essere un ninja adesso."
-        ],
-
-        on(msg = null) {
-            this.msg = msg ?? this.defaultMsg[Math.floor(Math.random() * this.defaultMsg.length)];
-            this.state = true
-        },
-        off() { this.state = false },
     },
 })

@@ -2,8 +2,10 @@
   <footer class="py-3">
 
     <div class="container">
-      <div class="row align-items-center text-white">
+      <div class="row align-items-center">
         <div class="col">
+          <p class="mb-0 small text-decoration-underline" v-if="notificationState"
+            @click="notification.askPermission()">notifiche push</p>
           <p class="mb-0">Antonino Cicala &copy;2024.</p>
         </div>
         <div class="col-auto">
@@ -52,11 +54,17 @@
 </template>
 
 <script>
+import notification from '../../notification';
 export default {
   data() {
     return {
+      notification,
+      notificationState: false
     }
   },
+  async mounted() {
+    this.notificationState = !(await this.notification.checkPermission())
+  }
 }
 </script>
 

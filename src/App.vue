@@ -1,5 +1,5 @@
 <template>
-  <CmpLoading v-if="store.loading.state" />
+  <CmpLoading v-if="$loading.state" />
   <AppHeader />
   <main class="d-flex">
     <RouterView />
@@ -8,26 +8,24 @@
 </template>
 
 <script>
-import { store } from './store.js';
-import AppHeader from './components/layout/AppHeader.vue'
-import AppFooter from './components/layout/AppFooter.vue'
-import CmpLoading from './components/CmpLoading.vue'
+import AppHeader from './view/layout/AppHeader.vue'
+import AppFooter from './view/layout/AppFooter.vue'
+import CmpLoading from './view/components/CmpLoading.vue'
 export default {
   components: { AppHeader, AppFooter, CmpLoading },
   data() {
     return {
-      store,
     }
   },
   watch: {
     '$route.name'(newRoute, oldRoute) {
       if (newRoute !== oldRoute) {
-        this.store.routeName = newRoute
+        this.$store.routeName = newRoute
       }
     },
   },
   async mounted() {
-    await this.store.start();
+    await this.$store.start();
   }
 }
 
@@ -35,6 +33,6 @@ export default {
 
 <style lang="scss">
 /*
-@use '../assets/scss/partials/_variables.scss' as *;
+@use './assets/scss/partials/_variables.scss' as *;
 */
 </style>

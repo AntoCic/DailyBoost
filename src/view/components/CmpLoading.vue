@@ -4,16 +4,14 @@
             <div class="spinner"></div>
             <span class="smile"></span>
         </div>
-        <p class="text-center">{{ store.loading.msg }}</p>
+        <p class="text-center">{{ $loading.msg }}</p>
     </div>
 </template>
 
 <script>
-import { store } from '../store.js';
 export default {
     data() {
         return {
-            store,
         }
     },
     mounted() {
