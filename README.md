@@ -60,3 +60,26 @@ testa il progetto su un serverver locale lanciando
 ```sh
 ntl dev
 ```
+
+/**
+ * Import function triggers from their respective submodules:
+ *
+ * const {onCall} = require("firebase-functions/v2/https");
+ * const {onDocumentWritten} = require("firebase-functions/v2/firestore");
+ *
+ * See a full list of supported triggers at https://firebase.google.com/docs/functions
+ * 
+ * logger.info()
+ * logger.warn()
+ * logger.error()
+ * 
+ * 
+ * Eventi Firestore: onDocumentCreated, onDocumentUpdated, onDocumentDeleted, e onDocumentWritten sono trigger di Firestore che si attivano rispettivamente alla creazione, modifica, cancellazione, o quando viene scritto un documento in Firestore.
+ *
+ * Funzioni di Autenticazione: Firebase ti permette di usare trigger per l’autenticazione, come onUserCreated e onUserDeleted, che si attivano alla creazione o cancellazione di un utente.
+ *
+ * onCall: È un tipo di funzione HTTPS che si può chiamare direttamente dal frontend e che consente una maggiore sicurezza perché richiede autenticazione.
+ *
+ * onSchedule: Questo trigger attiva le funzioni su un programma temporale, simile a un cron job.
+ * 
+ */
