@@ -11,21 +11,21 @@ export const store = reactive({
         loading.on('Il sito è timido, sta venendo fuori piano piano.')
         setTimeout(async () => {
 
-            await axios.get('/api')
-                .then((res) => {
-                    console.log(res.data);
-                })
-                .catch((err) => {
-                    location.reload();
-                });
+            // await axios.get('/api')
+            //     .then((res) => {
+            //         console.log(res.data);
+            //     })
+            //     .catch((err) => {
+            //         location.reload();
+            //     });
 
-            await axios.post('/api/test', { msg: 'Hello World' })
-                .then((res) => {
-                    console.log(res.data);
-                })
-                .catch((err) => {
-                    location.reload();
-                });
+            // await axios.post('/api/test', { msg: 'Hello World' })
+            //     .then((res) => {
+            //         console.log(res.data);
+            //     })
+            //     .catch((err) => {
+            //         location.reload();
+            //     });
 
             loading.off()
         }, 2000);

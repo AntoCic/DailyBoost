@@ -16,7 +16,7 @@
         <h1 class="bg-light text-dark px-4 py-2 rounded bg-opacity-75">Template <br> {{ $store.appName }}</h1>
 
         <button type="button" class="btn btn-outline-success" @click="count++">
-          count: {{ count }}
+          $$$$$$$count: {{ count }}
         </button>
 
       </div>
