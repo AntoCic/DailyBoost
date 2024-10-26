@@ -1,3 +1,4 @@
+<!-- App.vue -->
 <template>
   <CmpLoading v-if="$loading.state" />
   <AppHeader />

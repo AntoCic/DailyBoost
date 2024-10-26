@@ -1,6 +1,7 @@
+// store.js
 import { reactive } from 'vue'
 import { loading } from './loading';
-import axios from 'axios'
+// import axios from 'axios'
 
 export const store = reactive({
     appName: 'Vue-Bootstrap-Netlify', // Cambiare anche in index.html e site.webmanifest

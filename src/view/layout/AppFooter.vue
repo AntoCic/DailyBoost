@@ -63,7 +63,8 @@ export default {
     }
   },
   async mounted() {
-    this.notificationState = !(await this.notification.checkPermission())
+    this.notificationState = !(await this.notification.checkPermission());
+    this.notification.listenForMessages();
   }
 }
 </script>

@@ -61,6 +61,13 @@ testa il progetto su un serverver locale lanciando
 ntl dev
 ```
 
+npm install -g firebase-tools
+firebase      
+firebase login
+firebase projects:create
+firebase init functions 
+firebase init         
+
 /**
  * Import function triggers from their respective submodules:
  *
