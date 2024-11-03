@@ -90,3 +90,51 @@ firebase init
  * onSchedule: Questo trigger attiva le funzioni su un programma temporale, simile a un cron job.
  * 
  */
+
+Sto sviluppando una web app utilizzando Vite e Vue 3 (options), integrando Firebase per il servizio di hosting, storage, autenticazione, database in tempo reale e funzioni serverless. Le funzioni serverless mi permetteranno di inviare notifiche push periodicamente o su comando; alcune di queste funzionalità devono ancora essere implementate, ma sono previste in aggiornamenti successivi. Sto utilizzando anche Bootstrap per il design, Axios per le chiamate API, Vue Router per la gestione delle pagine e Sass per la personalizzazione dello stile.
+
+ /root
+  ├── dist/
+  ├── functions/
+  │     ├── node_modules/
+  │     ├── .gitignore
+  │     ├── index.js
+  │     ├── package.json
+  │     ├── package-lock.json
+  ├── node_modules/
+  ├── public/
+  │     ├── fonts/
+  │     ├── img/
+  │     └── site.webmanifest
+  ├── src/
+  │     ├── assets/
+  │     │     ├── img/
+  │     │     └── scss/
+  │     ├── views/
+  │     │     ├── components/
+  │     │     │     └── CmpLoading.vue
+  │     │     ├── layout/
+  │     │     │     ├── AppFooter.vue
+  │     │     │     └── AppHeader.vue
+  │     │     └── pages/
+  │     │     │     ├── ContactView.vue
+  │     │     │     └── HomeView.vue
+  │     ├── App.vue
+  │     ├── firebase-messaging-sw.js
+  │     ├── firebaseConfig.js
+  │     ├── loading.js
+  │     ├── main.js
+  │     ├── notification.js
+  │     ├── router.js
+  │     ├── store.js
+  │     └── utility.js
+  ├── .firebaserc
+  ├── .gitignore
+  ├── database.rules.json
+  ├── firebase.json
+  ├── index.html
+  ├── package-lock.json
+  ├── package.json
+  ├── README.md
+  ├── storage.rules
+  └── vite.config.js

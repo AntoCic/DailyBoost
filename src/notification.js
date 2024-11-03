@@ -10,39 +10,43 @@ import { store } from "./store";
 
 // notification
 export default {
-    // method per inviare una notifica
-    push(body) {
-        if (Notification.permission === 'granted') {
-            if (body) {
-                new Notification(store.appName, {
-                    body,
-                    icon: '/img/logo.png',
-                });
-            } else {
-                console.error('Errore notification.push(body).  body assente');
-            }
-        } else {
-            console.error('Errore notification.push(body). permessi notifiche assenti o negati');
-        }
+  // method per inviare una notifica
+  push(body) {
+    if (Notification.permission === "granted") {
+      if (body) {
+        new Notification(store.appName, {
+          body,
+          icon: "/img/logo.png",
+        });
+      } else {
+        console.error("Errore notification.push(body).  body assente");
+      }
+    } else {
+      console.error(
+        "Errore notification.push(body). permessi notifiche assenti o negati"
+      );
+    }
+  },
 
-    },
+  // controllo e in caso richesta permessi
+  async checkPermission() {
+    if (Notification.permission === "default") {
+      return await this.askPermission();
+    }
+    return Notification.permission === "granted";
+  },
 
-    // controllo e in caso richesta permessi
-    async checkPermission() {
-        if (Notification.permission === 'default') {
-            return await this.askPermission();
-        }
-        return Notification.permission === 'granted'
-    },
-
-    async askPermission() {
-        const permission = await Notification.requestPermission();
-        if (permission === 'granted') {
-            const token = await getToken(messaging, { vapidKey: 'BFKyf3KvT8cIxjEQWwZScFF-_urqkg2ia85CsQ7QG7XQBJzSWukyxaiAQWZMFyLsuJhtD64p3NYlydCBWHWlwgQ' }); // sostituisci 'LA_TUA_VAPID_KEY' con la tua chiave VAPID
-            console.log("Token FCM:", token);
-            this.push('Notifiche attive');
-        } else {
-            alert(`Le notifiche sono state disabilitate. Se cambi idea e vuoi dare l'accesso, segui questi passaggi:
+  async askPermission() {
+    const permission = await Notification.requestPermission();
+    if (permission === "granted") {
+      const token = await getToken(messaging, {
+        vapidKey:
+          "BFKyf3KvT8cIxjEQWwZScFF-_urqkg2ia85CsQ7QG7XQBJzSWukyxaiAQWZMFyLsuJhtD64p3NYlydCBWHWlwgQ",
+      }); // sostituisci 'LA_TUA_VAPID_KEY' con la tua chiave VAPID
+      console.log("Token FCM:", token);
+      this.push("Notifiche attive");
+    } else {
+      alert(`Le notifiche sono state disabilitate. Se cambi idea e vuoi dare l'accesso, segui questi passaggi:
 
 Google Chrome:
 1. Clicca sui tre puntini in alto a destra e seleziona Impostazioni.
@@ -61,15 +65,15 @@ Microsoft Edge:
 2. Vai su "Cookie e permessi dei siti", quindi su "Notifiche".
 3. Cerca il tuo sito nell'elenco e rimuovi il permesso.
 4. Aggiorna il sito.`);
-        }
-
-        return Notification.permission === 'granted'
-    },
-
-    async listenForMessages() {
-        onMessage(messaging, (payload) => {
-            console.log("Notifica ricevuta:", payload);
-            this.push(payload.notification.body); // Visualizza la notifica ricevuta
-        });
     }
-}
+
+    return Notification.permission === "granted";
+  },
+
+  async listenForMessages() {
+    // onMessage(messaging, (payload) => {
+    //   console.log("Notifica ricevuta:", payload);
+    //   this.push(payload.notification.body); // Visualizza la notifica ricevuta
+    // });
+  },
+};
