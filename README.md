@@ -138,3 +138,23 @@ Sto sviluppando una web app utilizzando Vite e Vue 3 (options), integrando Fireb
   ├── README.md
   ├── storage.rules
   └── vite.config.js
+
+
+
+Nella funzione onSchedule("every 10 minutes", Firebase supporta varie espressioni di intervallo. Ecco alcune opzioni che puoi utilizzare:
+
+Ogni tot minuti/ore/giorni:
+
+every 5 minutes - ogni 5 minuti.
+every 1 hours - ogni ora.
+every 12 hours - ogni 12 ore.
+every 24 hours - ogni giorno.
+A un'ora specifica:
+
+"15 of every hour" - al minuto 15 di ogni ora.
+"every day 09:00" - alle 9:00 ogni giorno.
+"every monday 08:30" - ogni lunedì alle 8:30.
+Orari settimanali/mensili:
+
+"every monday" - ogni lunedì.
+"1st day of month 12:00" - primo giorno di ogni mese alle 12:00.
