@@ -1,7 +1,7 @@
 // firebaseConfig.js
 
 import { initializeApp } from "firebase/app";
-import { getMessaging, getToken } from "firebase/messaging";
+import { getMessaging, getToken, onMessage } from "firebase/messaging";
 import { getFunctions, httpsCallable } from "firebase/functions";
 
 // La tua configurazione Firebase
@@ -64,6 +64,20 @@ const unsubscribeFromTopic = async () => {
     console.error("Errore durante la disiscrizione dal topic:", error);
   }
 };
+
+// Ascolta i messaggi in primo piano
+onMessage(messaging, (payload) => {
+  console.log('Messaggio ricevuto in foreground:', payload);
+
+  // Mostra una notifica personalizzata
+  const notificationTitle = payload.data.title;
+  const notificationOptions = {
+    body: payload.data.body,
+    icon: '/img/logo.png',
+  };
+
+  new Notification(notificationTitle, notificationOptions);
+});
 
 // Esporta l'app e l'istanza di messaging
 export { app, messaging, subscribeToTopic, unsubscribeFromTopic };

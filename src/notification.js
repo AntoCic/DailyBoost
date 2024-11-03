@@ -1,6 +1,4 @@
 // notification.js
-import { messaging } from "./firebaseConfig";
-import { getToken, onMessage } from "firebase/messaging";
 import { store } from "./store";
 
 // Notification.permission puo essere
@@ -39,11 +37,6 @@ export default {
   async askPermission() {
     const permission = await Notification.requestPermission();
     if (permission === "granted") {
-      const token = await getToken(messaging, {
-        vapidKey:
-          "BFKyf3KvT8cIxjEQWwZScFF-_urqkg2ia85CsQ7QG7XQBJzSWukyxaiAQWZMFyLsuJhtD64p3NYlydCBWHWlwgQ",
-      }); // sostituisci 'LA_TUA_VAPID_KEY' con la tua chiave VAPID
-      console.log("Token FCM:", token);
       this.push("Notifiche attive");
     } else {
       alert(`Le notifiche sono state disabilitate. Se cambi idea e vuoi dare l'accesso, segui questi passaggi:
@@ -70,10 +63,4 @@ Microsoft Edge:
     return Notification.permission === "granted";
   },
 
-  async listenForMessages() {
-    // onMessage(messaging, (payload) => {
-    //   console.log("Notifica ricevuta:", payload);
-    //   this.push(payload.notification.body); // Visualizza la notifica ricevuta
-    // });
-  },
 };

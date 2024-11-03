@@ -23,9 +23,9 @@ messaging.onBackgroundMessage((payload) => {
   console.log('Messaggio ricevuto in background:', payload);
 
   // Dati della notifica
-  const notificationTitle = payload.notification.title;
+  const notificationTitle = payload.data.title;
   const notificationOptions = {
-    body: payload.notification.body,
+    body: payload.data.body,
     icon: '/img/logo.png', // Imposta qui l'icona che preferisci
   };
 
