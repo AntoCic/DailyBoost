@@ -2,7 +2,11 @@
   <div class="container my-auto">
     <div class="row">
       <div class="col-6">
-        <a class="logo text-end" href="https://getbootstrap.com/docs/5.3/getting-started/introduction" target="_blank">
+        <a
+          class="logo text-end"
+          href="https://getbootstrap.com/docs/5.3/getting-started/introduction"
+          target="_blank"
+        >
           <img src="../../assets/img/bootstrap.svg" alt="logo Bootstrap" />
         </a>
       </div>
@@ -25,13 +29,16 @@
         <button v-else class="btn btn-secondary" @click="unsubscribeUser">
           Disiscriviti
         </button>
+        <button class="btn btn-info mt-3" @click="testNotification">
+          ciao mondo
+        </button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { subscribeToTopic, unsubscribeFromTopic } from "../../firebaseConfig";
+import { subscribeToTopic, unsubscribeFromTopic, testNotification } from "../../firebaseConfig";
 
 export default {
   data() {
@@ -42,23 +49,38 @@ export default {
   methods: {
     async subscribeUser() {
       try {
-        await subscribeToTopic();
+        const response = await subscribeToTopic();
+        console.log("Risposta dalla sottoscrizione:", response);
         this.isSubscribed = true;
         localStorage.setItem("isSubscribed", "true"); // Salva lo stato di iscrizione
         alert("Iscrizione alla newsletter avvenuta con successo!");
       } catch (error) {
+        console.error("Errore durante l'iscrizione alla newsletter:", error);
         alert("Errore durante l'iscrizione alla newsletter.");
       }
     },
 
     async unsubscribeUser() {
       try {
-        await unsubscribeFromTopic();
+        const response = await unsubscribeFromTopic();
+        console.log("Risposta dalla disiscrizione:", response);
         this.isSubscribed = false;
         localStorage.setItem("isSubscribed", "false"); // Salva lo stato di disiscrizione
         alert("Disiscrizione dalla newsletter avvenuta con successo!");
       } catch (error) {
+        console.error("Errore durante la disiscrizione dalla newsletter:", error);
         alert("Errore durante la disiscrizione dalla newsletter.");
+      }
+    },
+
+    async testNotification() {
+      try {
+        const response = await testNotification();
+        console.log("Risposta dal test della notifica:", response);
+        alert("Notifica di test inviata con successo!");
+      } catch (error) {
+        console.error("Errore durante il test della notifica:", error);
+        alert("Errore durante il test della notifica.");
       }
     },
   },

@@ -8,9 +8,11 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "f-init": "npm i && cd ./functions && npm i && cd ../ && firebase login && npm run build && firebase deploy",
-    "f-dev": "npm run build && firebase deploy",
-    "f-dev-i": "npm ci && npm run build && firebase deploy"
+    "init": "npm i && cd ./functions && npm i && cd ../ && firebase login && vite build && firebase deploy",
+    "build-fast": "vite build && firebase deploy",
+    "build-dev": "npm ci && vite build && firebase deploy",
+    "build-prod": "npm ci && vite build && firebase deploy",
+    "env-u": "firebase functions:config:import ./config.json && firebase deploy --only functions"
   },
   "dependencies": {
     "@popperjs/core": "^2.11.8",

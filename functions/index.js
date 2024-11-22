@@ -56,6 +56,7 @@ exports.scheduledNotification = onSchedule({
 exports.subscribeToTopic = onCall(async (request) => {
     const { token } = request.data;
     const topic = "allUsers";
+    console.log("Token ricevuto per la sottoscrizione:", token); // Aggiungi questo log
 
     try {
         const response = await getMessaging().subscribeToTopic(token, topic);
@@ -70,6 +71,7 @@ exports.subscribeToTopic = onCall(async (request) => {
 exports.unsubscribeFromTopic = onCall(async (request) => {
     const { token } = request.data;
     const topic = "allUsers";
+    console.log("Token ricevuto per la sottoscrizione:", token); // Aggiungi questo log
 
     try {
         const response = await getMessaging().unsubscribeFromTopic(token, topic);
@@ -80,3 +82,26 @@ exports.unsubscribeFromTopic = onCall(async (request) => {
         throw new functions.https.HttpsError('unknown', 'Errore durante la disiscrizione dal topic');
     }
 });
+
+// Aggiungi questa funzione nel tuo file delle funzioni Firebase
+exports.testNotification = onCall(async (request) => {
+  
+    const randomPhrase = phrases[Math.floor(Math.random() * phrases.length)];
+
+    const message = {
+        data: {
+            title: "DailyBoost",
+            body: randomPhrase,
+        },
+        topic: "allUsers"
+    };
+
+    try {
+        const response = await getMessaging().send(message);
+        console.log("Notifica inviata con successo:", response);
+    } catch (error) {
+        console.error("Errore nell'invio della notifica:", error);
+    }
+  
+  });
+  

@@ -65,6 +65,27 @@ const unsubscribeFromTopic = async () => {
   }
 };
 
+// Funzione di test per inviare una notifica manuale
+const testNotification = async () => {
+  try {
+    const token = await getToken(messaging, {
+      vapidKey: "BFKyf3KvT8cIxjEQWwZScFF-_urqkg2ia85CsQ7QG7XQBJzSWukyxaiAQWZMFyLsuJhtD64p3NYlydCBWHWlwgQ",
+    });
+
+    if (token) {
+      const functions = getFunctions();
+      const testNotificationFn = httpsCallable(functions, "testNotification");
+      const response = await testNotificationFn({ token }); // Passa il token qui
+      console.log("Notifica di test inviata con successo:", response);
+    } else {
+      console.error("Errore nell'ottenere il token per il test della notifica");
+    }
+  } catch (error) {
+    console.error("Errore durante l'invio della notifica di test:", error);
+  }
+};
+
+
 // Ascolta i messaggi in primo piano
 onMessage(messaging, (payload) => {
   console.log('Messaggio ricevuto in foreground:', payload);
@@ -80,4 +101,4 @@ onMessage(messaging, (payload) => {
 });
 
 // Esporta l'app e l'istanza di messaging
-export { app, messaging, subscribeToTopic, unsubscribeFromTopic };
+export { app, messaging, subscribeToTopic, unsubscribeFromTopic, testNotification};
