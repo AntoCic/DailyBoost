@@ -16,6 +16,18 @@ $commandsMenu = @{
         "Compila velocemente e distribuisci"            = "vite build; firebase deploy"
         "Compila in modalità sviluppo e distribuisci"   = "npm ci; vite build; firebase deploy"
         "Compila in modalità produzione e distribuisci" = "npm ci; vite build; firebase deploy"
+        "Upload env var con config.json e deploy"       = @(
+            "cd ./functions",
+            ".\env.ps1 -u",
+            "cd ../",
+            "vite build",
+            "firebase deploy"
+        ) -join "; "
+        "Pull env var in config.json"                   = @(
+            "cd ./functions",
+            ".\env.ps1 -p",
+            "cd ../"
+        ) -join "; "
     }
     
     "Global dependencies" = @{
@@ -46,6 +58,7 @@ $commandsMenu = @{
         "Installa Prettier"           = "npm install prettier"
         "Installa Nodemon"            = "npm install nodemon"
         "Installa Express"            = "npm i express"
+        "Installa vue-i18n"           = "npm i vue-i18n"
     }
         
     "Init"                = @{
@@ -72,10 +85,10 @@ $commandsMenu = @{
         "Inizializza progetto"                       = @(
             "npm i",
             "cd ./functions",
-            "npm i"
-            "cd ../"
-            "firebase login"
-            "vite build"
+            "npm i",
+            "cd ../",
+            "firebase login",
+            "vite build",
             "firebase deploy"
         ) -join "; "
     }
@@ -95,6 +108,23 @@ foreach ($menuKey in $commandsMenu.Keys) {
 [console]::OutputEncoding = [System.Text.Encoding]::UTF8
 
 # Imposta colori per il testo
+# Esempi di colori disponibili:
+# Black
+# Blue
+# Cyan
+# DarkBlue
+# DarkCyan
+# DarkGray
+# DarkGreen
+# DarkMagenta
+# DarkRed
+# DarkYellow
+# Gray
+# Green
+# Magenta
+# Red
+# White
+# Yellow
 function Write-Text {
     param(
         [string]$Text,
