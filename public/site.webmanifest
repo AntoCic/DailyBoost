@@ -1,13 +1,21 @@
 {
-    "short_name": "TEMP",
-    "name": "Template",
+    "name": "__APP_NAME__",
+    "short_name": "__APP_SHORT_NAME__",
+    "start_url": "/",
+    "display": "__APP_DISPLAY__",
+    "background_color": "__APP_BACKGROUND_COLOR__",
+    "description": "__APP_DESCRIPTION__",
     "icons": [
         {
-            "src": "/img/logo.png",
-            "type": "image/png",
-            "sizes": "192x192"
+            "src": "__APP_LOGO_SM__",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "__APP_LOGO__",
+            "sizes": "512x512",
+            "type": "image/png"
         }
     ],
-    "theme_color": "#212529",
-    "display": "fullscreen"
+    "version": "__APP_VERSION__"
 }

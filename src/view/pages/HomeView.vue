@@ -17,9 +17,9 @@
       </div>
       <div class="col-12 text-center">
         <h1 class="bg-light text-dark px-4 py-2 rounded bg-opacity-75">
-          Template <br />
-          {{ $store.appName }}
+          {{ $store.appName }} - {{ $store.appShortName }}  - {{ $store.appVersion }} 
         </h1>
+        <p class="mb-1">{{ $store.appDescription }}</p>
       </div>
 
       <div class="col-12 text-center">
@@ -29,8 +29,8 @@
         <button v-else class="btn btn-secondary" @click="unsubscribeUser">
           Disiscriviti
         </button>
-        <button class="btn btn-info mt-3" @click="testNotification">
-          ciao mondo
+        <button class="btn btn-outline-info" @click="testNotification">
+          Send Notifica
         </button>
       </div>
     </div>

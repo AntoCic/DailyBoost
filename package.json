@@ -1,8 +1,15 @@
 {
-  "name": "temp_vue-bootstrap",
+  "version": "0.0.4",
+  "author": "Antonino Cicala",
+  "license": "ISC",
+  "name": "temp-vue-bootstrap",
+  "short_name": "TEMP",
+  "description": "Template base app",
+  "display": "fullscreen",
+  "background_color": "#212529", 
+  "logo_sm": "/img/logo.png",
+  "logo": "/img/logo.png",
   "private": true,
-  "version": "0.0.0",
-  "description": "",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -26,8 +33,7 @@
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.4",
     "sass": "^1.77.5",
-    "vite": "^5.2.0"
-  },
-  "author": "Antonino Cicala",
-  "license": "ISC"
+    "vite": "^5.2.0",
+    "vite-plugin-static-copy": "^2.1.0"
+  }
 }

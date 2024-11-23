@@ -4,7 +4,7 @@
       <nav class="row align-items-center my-1">
         <div class="col">
           <RouterLink to="/">
-            <img src="/img/logo.png" class="logo align-text-top" alt="Vue logo" />
+            <img :src="$store.logoPath" class="logo align-text-top" alt="Vue logo" />
           </RouterLink>
         </div>
         <div class="col-auto">

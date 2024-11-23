@@ -1,3 +1,4 @@
+// --------------------------------------------------------------
 // Importa Firebase
 importScripts('https://www.gstatic.com/firebasejs/9.19.1/firebase-app-compat.js');
 importScripts('https://www.gstatic.com/firebasejs/9.19.1/firebase-messaging-compat.js');
@@ -32,3 +33,4 @@ messaging.onBackgroundMessage((payload) => {
   // Mostra la notifica
   self.registration.showNotification(notificationTitle, notificationOptions);
 });
+

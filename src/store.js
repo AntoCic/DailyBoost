@@ -4,7 +4,13 @@ import { loading } from './loading';
 // import axios from 'axios'
 
 export const store = reactive({
-    appName: 'Vue-Bootstrap-Netlify', // Cambiare anche in index.html e site.webmanifest
+    appVersion: __APP_VERSION__,
+    appName: __APP_NAME__,
+    appShortName: __APP_SHORT_NAME__,
+    appDescription: __APP_DESCRIPTION__,
+    bkColor: __APP_BACKGROUND_COLOR__,
+    logoPath: __APP_LOGO__,
+    
     routeName: '',
 
     async start() {
