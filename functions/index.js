@@ -28,28 +28,35 @@ const phrases = [
     "Abbi sempre fiducia in te stesso… e nel GPS, perché le strade della vita sono complicate!"
 ];
 
+// Funzione helper per inviare notifiche
+async function sendNotification(topic, title, body) {
+    const message = {
+        data: {
+            title: title,
+            body: body,
+        },
+        topic: topic
+    };
+
+    try {
+        const response = await getMessaging().send(message);
+        console.log(`Notifica inviata con successo al topic "${topic}":`, response);
+        return response;
+    } catch (error) {
+        console.error(`Errore nell'invio della notifica al topic "${topic}":`, error);
+        throw new Error('Errore durante l\'invio della notifica');
+    }
+}
+
 
 // Funzione pianificata per inviare una notifica ogni 10 minuti
 exports.scheduledNotification = onSchedule({
     schedule: "30 7 * * *",  // 7:30 ogni giorno
     timeZone: "Europe/Rome"   // Imposta l’orario italiano
 }, async (event) => {
-    const randomPhrase = phrases[Math.floor(Math.random() * phrases.length)];
+    const body = phrases[Math.floor(Math.random() * phrases.length)];
 
-    const message = {
-        data: {
-            title: "DailyBoost",
-            body: randomPhrase,
-        },
-        topic: "allUsers"
-    };
-
-    try {
-        const response = await getMessaging().send(message);
-        console.log("Notifica inviata con successo:", response);
-    } catch (error) {
-        console.error("Errore nell'invio della notifica:", error);
-    }
+    sendNotification("allUsers", "DailyBoost", body);
 });
 
 // Funzione callable per sottoscrivere un token al topic "allUsers"
@@ -85,23 +92,9 @@ exports.unsubscribeFromTopic = onCall(async (request) => {
 
 // Aggiungi questa funzione nel tuo file delle funzioni Firebase
 exports.testNotification = onCall(async (request) => {
-  
-    const randomPhrase = phrases[Math.floor(Math.random() * phrases.length)];
 
-    const message = {
-        data: {
-            title: "DailyBoost",
-            body: randomPhrase,
-        },
-        topic: "allUsers"
-    };
+    const body = phrases[Math.floor(Math.random() * phrases.length)];
 
-    try {
-        const response = await getMessaging().send(message);
-        console.log("Notifica inviata con successo:", response);
-    } catch (error) {
-        console.error("Errore nell'invio della notifica:", error);
-    }
-  
-  });
-  
+    sendNotification("allUsers", "DailyBoost", body);
+
+});
