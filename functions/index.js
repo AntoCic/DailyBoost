@@ -2,6 +2,8 @@ const { onSchedule } = require('firebase-functions/v2/scheduler');
 const { onCall } = require('firebase-functions/v2/https');
 const { getMessaging } = require('firebase-admin/messaging');
 const admin = require('firebase-admin');
+const axios = require('axios');
+const leggi_potere = require('./leggi_potere.json');
 
 admin.initializeApp();
 
@@ -29,16 +31,37 @@ const phrases = [
 ];
 
 // Funzione helper per inviare notifiche
-async function sendNotification(topic, title, body) {
-    const message = {
-        data: {
-            title: title,
-            body: body,
-        },
-        topic: topic
-    };
+async function sendNotification(topic) {
+
+    const lowNuber = Math.floor(Math.random() * leggi_potere.length) + 1;
+    const dailyLow = leggi_potere[lowNuber - 1];
+    const title = `${lowNuber}. ${dailyLow.titolo}`;
+    const shortTitle = title.length > 39 ? title.slice(0, 37) + '..' : title;
+    const descrizione = dailyLow.descrizione ?? '';
+    const motivazionale = phrases[Math.floor(Math.random() * phrases.length)];
 
     try {
+        // Oggetto da salvare nel Realtime Database
+        const dailyInfo = {
+            title,
+            lowNuber,
+            descrizione,
+            motivazionale,
+            updatedAt: new Date().toISOString()
+        };
+
+        // Scrive o aggiorna l'oggetto nel nodo dailyInfo
+        const dbRefDailyInfo = admin.database().ref(`dailyInfo`);
+        await dbRefDailyInfo.set(dailyInfo); // Usa set per sovrascrivere
+        console.log(`Dati aggiornati nel Realtime Database.`);
+
+        const message = {
+            data: {
+                title: shortTitle,
+                body: motivazionale,
+            },
+            topic: topic
+        };
         const response = await getMessaging().send(message);
         console.log(`Notifica inviata con successo al topic "${topic}":`, response);
         return response;
@@ -54,9 +77,7 @@ exports.scheduledNotification = onSchedule({
     schedule: "30 7 * * *",  // 7:30 ogni giorno
     timeZone: "Europe/Rome"   // Imposta l’orario italiano
 }, async (event) => {
-    const body = phrases[Math.floor(Math.random() * phrases.length)];
-
-    sendNotification("allUsers", "DailyBoost", body);
+    sendNotification("allUsers");
 });
 
 // Funzione callable per sottoscrivere un token al topic "allUsers"
@@ -93,8 +114,62 @@ exports.unsubscribeFromTopic = onCall(async (request) => {
 // Aggiungi questa funzione nel tuo file delle funzioni Firebase
 exports.testNotification = onCall(async (request) => {
 
-    const body = phrases[Math.floor(Math.random() * phrases.length)];
-
-    sendNotification("allUsers", "DailyBoost", body);
+    sendNotification("allUsers");
 
 });
+
+exports.getResCal = onCall(async (request) => {
+    // const data = {
+    //     test: "debubber ",
+    //     descrizione: "prova",
+    // };
+
+    // return data;
+    return leggi_potere;
+});
+
+async function generateDailyContent() {
+    const prompt = `
+Sei un assistente che genera un breve JSON con le seguenti proprietà:
+- titolo_giorno: Un breve titolo per la giornata, massimo 5 parole, creativo ma comprensibile.
+- descrizione_giorno: Una descrizione brevissima della giornata a Sciacca in Sicilia, massimo 30 parole. Menaziona se pioverà, farà caldo, freddo, ci sarà un evento locale o una festività, qualcosa di rilevante per il giorno.
+- motivazionale: Una breve frase motivazionale di massimo 20 parole per iniziare bene la giornata.
+- shortcut_vscode_giorno: Un suggerimento di un singolo shortcut di Visual Studio Code su Windows (ad esempio "Ctrl+Shift+P: Apri palette comandi").
+
+Restituisci SOLO un oggetto JSON con queste proprietà e nessun altro testo.
+`;
+
+    try {
+        const response = await axios.post('https://api.openai.com/v1/chat/completions', {
+            model: 'gpt-4',
+            messages: [
+                {
+                    role: 'system',
+                    content: 'Sei un assistente utile e conciso.'
+                },
+                {
+                    role: 'user',
+                    content: prompt
+                }
+            ],
+            max_tokens: 200,
+            temperature: 0.7,
+            n: 1
+        }, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`
+            }
+        });
+
+        const completion = response.data.choices[0].message.content.trim();
+        // Il contenuto generato deve essere un JSON valido. Facciamo un parse:
+        const jsonResponse = JSON.parse(completion);
+
+        return jsonResponse;
+
+    } catch (error) {
+        console.error('Errore nella chiamata a OpenAI:', error);
+        throw new Error('Errore durante la generazione del contenuto');
+    }
+};

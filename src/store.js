@@ -35,7 +35,7 @@ export const store = reactive({
             //     });
 
             loading.off()
-        }, 2000);
+        }, 500);
 
     },
 })

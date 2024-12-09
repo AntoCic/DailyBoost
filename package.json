@@ -6,7 +6,7 @@
   "short_name": "TEMP",
   "description": "Template base app",
   "display": "fullscreen",
-  "background_color": "#212529", 
+  "background_color": "#212529",
   "logo_sm": "/img/logo.png",
   "logo": "/img/logo.png",
   "private": true,
@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "@popperjs/core": "^2.11.8",
-    "axios": "^1.7.2",
+    "axios": "^1.7.9",
     "bootstrap": "^5.3.3",
     "firebase": "^11.0.1",
     "firebase-functions": "^6.1.0",
